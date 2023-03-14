@@ -3,6 +3,7 @@ import LoginPage from './pages/login'
 import { GlobalStyles } from './styles/globalStyled'
 import { theme } from './theme/theme'
 import { ThemeProvider } from '@mui/system'
+import RegisterPage from './pages/register'
 
 export default function RoutesPage() {
     return (
@@ -10,6 +11,8 @@ export default function RoutesPage() {
             <GlobalStyles />
             <Routes>
                 <Route path='*' element={<LoginPage />} />
+                <Route path='login' element={<LoginPage />} />
+                <Route path='register' element={<RegisterPage />} />
             </Routes>
         </ThemeProvider>
     )
