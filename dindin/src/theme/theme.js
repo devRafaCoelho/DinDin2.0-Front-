@@ -20,7 +20,7 @@ export const theme = createTheme({
             dark: '#243F80'
         },
         grey: {
-            100: '#F8F8F9',
+            100: '#FAFAFA',
             200: '#F0F0F5',
             300: '#DEDEE9',
             400: '#C8C8D7',
@@ -75,7 +75,7 @@ export const theme = createTheme({
         },
         filterTitle: {
             fontFamily: 'Lato',
-            fontSize: '0.75rem',
+            fontSize: '0.9375rem',
             fontWeight: '700',
             lineHeight: '0.875rem',
         },
@@ -126,6 +126,18 @@ export const theme = createTheme({
             fontSize: '0.875rem',
             fontWeight: '700',
             lineHeight: '1.0625rem',
+        },
+        deleteText: {
+            fontFamily: 'Rubik',
+            fontSize: '0.625rem',
+            fontWeight: '300',
+            lineHeight: '0.75rem',
+        },
+        deleteButton: {
+            fontFamily: 'Rubik',
+            fontSize: '0.5625rem',
+            fontWeight: '500',
+            lineHeight: '0.6875rem',
         }
     }
 })

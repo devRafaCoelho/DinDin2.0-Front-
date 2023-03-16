@@ -10,11 +10,11 @@ export default function HeaderPart() {
             <HeaderContent>
                 <Logo />
                 <HeaderText>
-                    <img style={{ width: '65px', height: '65px' }} src={profile} alt='Imagem de perfil' />
+                    <img style={{ width: '65px', height: '65px', cursor: 'pointer' }} src={profile} alt='Imagem de perfil' />
                     <Typography variant="button" color="white">
                         Nome do Perfil
                     </Typography>
-                    <img style={{ width: '40px', height: '40px' }} src={exit} alt='Imagem de perfil' />
+                    <img style={{ width: '40px', height: '40px', cursor: 'pointer' }} src={exit} alt='Imagem de perfil' />
                 </HeaderText>
             </HeaderContent>
             <HeaderWhite />

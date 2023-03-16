@@ -1,4 +1,4 @@
-import { styled, Box, Button, InputLabel } from "@mui/material";
+import { styled, Box, Button, InputLabel, TableCell } from "@mui/material";
 import { theme } from "../theme/theme";
 import ImagemDeFundo from '../assets/imagemDeFundo.png'
 
@@ -37,4 +37,8 @@ export const FormBox = styled(Box)`
     max-width: ${({ blur }) => (blur ? '610px' : '513px')} !important;
     padding: ${({ blur }) => (blur ? '60px 64px 48px 64px' : '40px 32px 50px 32px')};
     gap: ${({ gap }) => (gap ? gap : 'none')}
+`
+
+export const CustomTableCell = styled(TableCell)`
+    padding-left: 28px;
 `

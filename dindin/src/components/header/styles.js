@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const HeaderBox = styled(Box)`
-    width: 100vw;
+    min-width: 100%;
     min-height: 15vh;
     background-image: linear-gradient(to right, #05EDE3, #6460FB);   
 `
@@ -11,7 +11,13 @@ export const HeaderContent = styled(Box)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
+    min-height: 10vh;
+    @media screen and (max-width: 630px) {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 `
 
 export const HeaderText = styled(Box)`
@@ -21,7 +27,7 @@ export const HeaderText = styled(Box)`
 `
 
 export const HeaderWhite = styled(Box)`
-    width: 100vw;
+    width: 100%;
     height: 5vh;
     background-color: white;
     border-top-left-radius: 70px;
