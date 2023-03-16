@@ -22,3 +22,29 @@ export const schemaLogin = yup.object().shape({
         .string()
         .required('Este campo deve ser preenchido')
 })
+
+export const schemaUpdateUser = yup.object().shape({
+    name: yup.string().required('Este campo deve ser preenchido'),
+    email: yup.string().required('Este campo deve ser preenchido'),
+    password: yup.string().required('Este campo deve ser preenchido'),
+    newPassword: yup.string().nullable(),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null], 'As senhas não são iguais')
+        .nullable()
+})
+
+export const schemaTransition = yup.object().shape({
+    value: yup
+        .string()
+        .required('Este campo deve ser preenchido'),
+    date: yup
+        .string()
+        .required('Este campo deve ser preenchido'),
+    category: yup
+        .string()
+        .required('Este campo deve ser preenchido'),
+    description: yup
+        .string()
+        .nullable()
+})

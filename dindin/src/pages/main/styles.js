@@ -1,5 +1,6 @@
-import { Box, Paper, styled, TableCell, TableContainer } from "@mui/material";
+import { Box, Paper, styled, Table, TableCell, TableContainer, TableHead } from "@mui/material";
 import { theme } from '../../theme/theme'
+import { CustomTableCell } from "../../styles/styles";
 
 export const MainPageBox = styled(Box)`
     width: 100%;
@@ -46,4 +47,19 @@ export const CustomTableContainer = styled(TableContainer)`
     &::-webkit-scrollbar {
         width: 1px;
     }
+`
+
+export const CustomTableHead = styled(TableHead)`
+    background: #FAFAFA;
+    box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+`
+
+export const TableCellBorderRadius = styled(CustomTableCell)`
+    ${({ side }) => (`border-top-${side}-radius: 50px;`)}
+    ${({ side }) => (`border-bottom-${side}-radius: 50px;`)}
+`
+
+export const CustomTable = styled(Table)`
+    border-collapse: unset;
 `
