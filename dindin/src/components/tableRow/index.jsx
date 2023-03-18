@@ -6,7 +6,7 @@ import { useState } from "react";
 import ArrowDelete from '../../assets/arrowDelete.svg'
 import { TableRowBox, CustomPaper } from "./styles";
 
-export default function CustomTableRow({ setTransitionFormBoolean }) {
+export default function CustomTableRow({ setTransitionEditFormBoolean, type }) {
     const [openDelete, setOpenDelete] = useState(false)
     return (
         <TableRow>
@@ -31,7 +31,7 @@ export default function CustomTableRow({ setTransitionFormBoolean }) {
                 </Typography>
             </TableCell>
             <TableCell align='center'>
-                <Typography variant='tableTitle'>
+                <Typography variant='tableTitle' color={type ? '#7B61FF' : '#FA8C10'}>
                     R$ 100,00
                 </Typography>
             </TableCell>
@@ -40,7 +40,7 @@ export default function CustomTableRow({ setTransitionFormBoolean }) {
                     style={{ cursor: 'pointer' }}
                     src={Pen}
                     alt='Imagem Editar Cobrança'
-                    onClick={() => setTransitionFormBoolean(true)}
+                    onClick={() => setTransitionEditFormBoolean(true)}
                 />
             </TableCell>
             <TableCell style={{ position: 'relative' }} align='center'>

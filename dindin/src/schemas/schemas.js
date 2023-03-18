@@ -43,6 +43,7 @@ export const schemaTransition = yup.object().shape({
         .required('Este campo deve ser preenchido'),
     category: yup
         .string()
+        .notOneOf(['valor nulo'], 'Selecione um valor')
         .required('Este campo deve ser preenchido'),
     description: yup
         .string()

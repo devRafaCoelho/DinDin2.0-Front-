@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { FormLabel, Grid, MenuItem, Select, Typography } from "@mui/material";
 import { DefaultButton, FormBox } from "../../styles/styles";
 import closeX from "../../assets/closeX.svg"
 import DefaultTextField from "../defaultTextField";
@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 import { schemaTransition } from "../../schemas/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TextBox, XBox } from "../../styles/styles"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { mask, unMask } from 'remask'
 import { formatedValueInputBRL } from '../../utils/formatValue'
+import { CustomTypography } from './styles'
 
-export default function TransitionForm({ setTransitionFormBoolean, text }) {
+export default function TransitionForm({ setState, text }) {
+    const [selectValue, setSelectValue] = useState('valor nulo')
     const {
         register,
         handleSubmit,
@@ -50,7 +52,7 @@ export default function TransitionForm({ setTransitionFormBoolean, text }) {
                     {text} Registro
                 </Typography>
                 <XBox>
-                    <img onClick={() => setTransitionFormBoolean(false)} style={{ cursor: 'pointer' }} src={closeX} />
+                    <img onClick={() => setState(false)} style={{ cursor: 'pointer' }} src={closeX} />
                 </XBox>
             </TextBox>
             <Grid container spacing={2}>
@@ -63,6 +65,42 @@ export default function TransitionForm({ setTransitionFormBoolean, text }) {
                     mask={handleChange}
                     start='R$'
                 />
+                <Grid item xs={12}>
+                    <FormLabel htmlFor='category'>
+                        <Typography color='#484848' variant='formLabel'>{text}</Typography>
+                    </FormLabel>
+                    <Select
+                        fullWidth
+                        id="category"
+                        name="category"
+                        value={selectValue}
+                        {...register('category')}
+                        error={!!errors['category']}
+                        onChange={(e) => setSelectValue(e.target.value)}
+                        color="grey"
+                    >
+                        <MenuItem disabled value='valor nulo'>
+                            <em>Selecione a categoria</em>
+                        </MenuItem>
+                        <MenuItem value="coisa linda">
+                            <em>coisa linda</em>
+                        </MenuItem>
+                        <MenuItem value="coisa feia">
+                            <em>coisa feia</em>
+                        </MenuItem>
+                        <MenuItem value="horroroso">
+                            <em>horroroso</em>
+                        </MenuItem>
+                        <MenuItem value="aaaa">
+                            <em>aaaa</em>
+                        </MenuItem>
+                    </Select>
+                    {errors['category'] && (
+                        <CustomTypography>
+                            {errors['category'].message}
+                        </CustomTypography>
+                    )}
+                </Grid>
                 <DefaultTextField
                     inputName='date'
                     text='Data'
@@ -83,6 +121,6 @@ export default function TransitionForm({ setTransitionFormBoolean, text }) {
                     Confirmar
                 </Typography>
             </DefaultButton>
-        </FormBox>
+        </FormBox >
     )
 }

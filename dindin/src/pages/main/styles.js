@@ -7,12 +7,6 @@ export const MainPageBox = styled(Box)`
     min-height: 100vh;
 `
 
-export const MainPageContent = styled(Box)`
-    padding-left: 7vw;
-    padding-right: 7vw;
-    min-height: 85vh;
-`
-
 export const MainPaperFilterButton = styled(Paper)`
     display: flex;
     align-items: center;
@@ -29,6 +23,7 @@ export const MainPaperFilter = styled(Paper)`
     width: 100%;
     background-color: ${(theme.palette.grey['100'])};
     padding: 32px 0 13px 32px;
+    margin-bottom: 25px;
 `
 
 export const ButtonFilterApplication = styled(Paper)`
@@ -47,6 +42,7 @@ export const CustomTableContainer = styled(TableContainer)`
     &::-webkit-scrollbar {
         width: 1px;
     }
+    padding-bottom: 50px;
 `
 
 export const CustomTableHead = styled(TableHead)`
@@ -62,4 +58,35 @@ export const TableCellBorderRadius = styled(CustomTableCell)`
 
 export const CustomTable = styled(Table)`
     border-collapse: unset;
+`
+
+export const MainPageAll = styled(Box)`
+    display: flex;
+    column-gap: 40px;
+    flex-wrap: wrap;
+    min-height: 85vh;
+    padding-left: 7vw;
+    padding-right: 7vw;
+    justify-content: space-between;
+`
+
+export const PageResume = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+`
+
+export const Resume = styled(Paper)`
+    background: #FAFAFA;
+    box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 32px;
+    width: 236px;
+    display: flex;
+    flex-direction: column;
+`
+
+export const ResumeValue = styled(Box)`
+    display: flex;
+    justify-content: space-between;
 `

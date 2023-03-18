@@ -1,7 +1,7 @@
-import { Container, styled } from '@mui/material'
+import { Box, styled } from '@mui/material'
 import { css } from '@mui/styled-engine'
 
-const ModalBackground = styled(Container)`
+const ModalBackground = styled(Box)`
     ${({ theme }) => css`
         padding: 50px 0;
         position: fixed;
@@ -15,7 +15,9 @@ const ModalBackground = styled(Container)`
         align-items: center;
         background-color: ${theme.palette.grey[1000]};
         backdrop-filter: blur(2px);
-        transition: all 2s ;
+        transition: all 2s;
+        width: 100%;
+        padding: 10px;
     `}
 `
 
