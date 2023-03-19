@@ -52,7 +52,7 @@ export default function RegisterPage() {
       <Logo margin="30px" />
       <LoginRegisterPageContend>
         <FormBox component="form" gap="50px" onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}>
-          <Typography variant="loginFormTitle" color="primary">
+          <Typography variant="loginFormTitle" component="h1" color="primary">
             Cadastre-se
           </Typography>
           <Grid gap="30px" container spacing={2}>
@@ -62,12 +62,12 @@ export default function RegisterPage() {
             <DefaultTextField inputName="confirmPassword" text="Confirmação de Senha" register={register} errors={errors} placeHolderText="sua senha" passwordInput={true} />
           </Grid>
           <BoxRegisterButton>
-            <DefaultButton type="submit" variant="contained" middle="50%">
+            <DefaultButton type="submit" variant="contained">
               <Typography variant="button" color="white">
                 Cadastrar
               </Typography>
             </DefaultButton>
-            <Typography sx={{ cursor: 'pointer' }} variant="button" color="primary" onClick={() => navigate('/login')}>
+            <Typography sx={{ cursor: 'pointer' }} variant="tableTitle" component="span" color="primary" onClick={() => navigate('/login')}>
               Já tem cadastro? Clique aqui!
             </Typography>
           </BoxRegisterButton>

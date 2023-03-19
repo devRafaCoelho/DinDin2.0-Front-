@@ -56,14 +56,14 @@ export default function LoginPage() {
       <LoginRegisterPageContend>
         <DisplayGap>
           <LoginText>
-            <Typography variant="loginTitle" color="white">
+            <Typography variant="loginTitle" component="h3" color="white">
               Controle suas{' '}
               <Typography variant="loginTitle" color="primary">
                 finanças
               </Typography>
               , sem planilha chata.
             </Typography>
-            <Typography variant="loginText" color="white">
+            <Typography variant="loginText" component="p" color="white">
               Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
             </Typography>
             <TextButton color="primary" onClick={() => navigate('/register')} variant="contained">
@@ -73,7 +73,7 @@ export default function LoginPage() {
             </TextButton>
           </LoginText>
           <FormBox component="form" gap="50px" onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}>
-            <Typography variant="loginFormTitle" color="primary">
+            <Typography variant="loginFormTitle" component="h1" color="primary">
               Login
             </Typography>
             <Grid gap="30px" container spacing={2}>
