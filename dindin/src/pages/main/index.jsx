@@ -1,32 +1,37 @@
+import { Box, TableBody, TableCell, Typography } from '@mui/material'
+import { useState } from 'react'
+import Filter from '../../assets/filter.svg'
+import HeaderPart from '../../components/header'
+import Modal from '../../components/modal'
+import CustomTableRow from '../../components/tableRow'
+import TransitionForm from '../../components/transactionForm'
+import useAppContext from '../../hooks/useAppContext'
+import { DefaultButton } from '../../styles/styles'
 import {
-  MainPageBox,
-  MainPaperFilterButton,
-  MainPageAll,
-  PageResume,
-  ResumeValue,
   ButtonFilterApplication,
   CustomTable,
-  TableCellBorderRadius,
-  CustomTableHead,
-  MainPaperFilter,
   CustomTableContainer,
-  MainPageContent,
-  Resume
+  CustomTableHead,
+  MainPageAll,
+  MainPageBox,
+  MainPaperFilter,
+  MainPaperFilterButton,
+  PageResume,
+  Resume,
+  ResumeValue,
+  TableCellBorderRadius
 } from './styles'
-import HeaderPart from '../../components/header'
-import { Box, TableBody, TableCell, Typography } from '@mui/material'
-import Filter from '../../assets/filter.svg'
-import { useState } from 'react'
-import CustomTableRow from '../../components/tableRow'
-import Modal from '../../components/modal'
-import UserForm from '../../components/userForm'
-import TransitionForm from '../../components/transitionForm'
-import { DefaultButton } from '../../styles/styles'
 
 export default function MainPage() {
   const [filterBoolean, setFilterBoolean] = useState(false)
   const [transitionEditFormBoolean, setTransitionEditFormBoolean] = useState(false)
-  const [transitionAddFormBoolean, setTransitionAddFormBoolean] = useState(false)
+
+  const {
+    openAddTransactionForm,
+    setOpenAddTransactionForm,
+    openEditTransactionForm,
+    setOpenEditTransactionForm
+  } = useAppContext()
 
   return (
     <>
@@ -81,25 +86,13 @@ export default function MainPage() {
                   <TableCellBorderRadius side="right" />
                 </CustomTableHead>
                 <TableBody>
-                  <CustomTableRow
-                    type="a"
-                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
-                  />
-                  <CustomTableRow
-                    type="a"
-                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
-                  />
-                  <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow
-                    type="a"
-                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
-                  />
-                  <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow
-                    type="a"
-                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
-                  />
+                  <CustomTableRow type="a" />
+                  <CustomTableRow type="a" />
+                  <CustomTableRow />
+                  <CustomTableRow type="a" />
+                  <CustomTableRow />
+                  <CustomTableRow />
+                  <CustomTableRow type="a" />
                 </TableBody>
               </CustomTable>
             </CustomTableContainer>
@@ -136,7 +129,7 @@ export default function MainPage() {
                 </Typography>
               </ResumeValue>
             </Resume>
-            <DefaultButton variant="contained" onClick={() => setTransitionAddFormBoolean(true)}>
+            <DefaultButton variant="contained" onClick={() => setOpenAddTransactionForm(true)}>
               <Typography variant="button" color="white">
                 Adicionar Registro
               </Typography>
@@ -145,12 +138,12 @@ export default function MainPage() {
         </MainPageAll>
       </MainPageBox>
 
-      {/* <Modal open={transitionEditFormBoolean}>
-        <TransitionForm text="Editar" setState={setTransitionEditFormBoolean} />
+      <Modal open={openAddTransactionForm}>
+        <TransitionForm text="Adicionar" />
       </Modal>
-      <Modal open={transitionAddFormBoolean}>
-        <TransitionForm text="Adicionar" setState={setTransitionAddFormBoolean} />
-      </Modal> */}
+      <Modal open={openEditTransactionForm}>
+        <TransitionForm text="Editar" />
+      </Modal>
     </>
   )
 }

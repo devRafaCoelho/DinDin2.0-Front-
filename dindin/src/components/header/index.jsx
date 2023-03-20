@@ -12,8 +12,7 @@ import { HeaderBox, HeaderContent, HeaderText, HeaderWhite } from './styles'
 import useAppContext from '../../hooks/useAppContext'
 
 export default function HeaderPart() {
-  // const [userFormBoolean, setUserFormBoolean] = useState(false)
-  const { userData, setUserData, openUserModal, setOpenUserModal } = useAppContext()
+  const { userData, setUserData, openUserForm, setOpenUserForm } = useAppContext()
   const navigate = useNavigate()
 
   async function getUser() {
@@ -42,7 +41,7 @@ export default function HeaderPart() {
         <Logo />
         <HeaderText>
           <img
-            onClick={() => setOpenUserModal(true)}
+            onClick={() => setOpenUserForm(true)}
             style={{ width: '65px', height: '65px', cursor: 'pointer' }}
             src={profile}
             alt="Imagem de perfil"
@@ -62,7 +61,7 @@ export default function HeaderPart() {
         </HeaderText>
       </HeaderContent>
       <HeaderWhite />
-      <Modal open={openUserModal}>
+      <Modal open={openUserForm}>
         <UserForm getUser={getUser} />
       </Modal>
     </HeaderBox>

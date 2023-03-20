@@ -11,7 +11,7 @@ import DefaultTextField from '../defaultTextField'
 import useAppContext from '../../hooks/useAppContext'
 
 export default function UserForm({ getUser }) {
-  const { userData, setUserData, setOpenUserModal } = useAppContext()
+  const { userData, setUserData, setOpenUserForm } = useAppContext()
   const {
     register,
     handleSubmit,
@@ -48,7 +48,7 @@ export default function UserForm({ getUser }) {
 
       setUserData(data)
       getUser()
-      setOpenUserModal()
+      setOpenUserForm()
     } catch (error) {
       if (error.response.data?.error) {
         const errorData = Object.getOwnPropertyNames(error.response.data?.error)
@@ -87,7 +87,7 @@ export default function UserForm({ getUser }) {
       <TextBox>
         <Typography variant="dindinLogo">Editar Perfil</Typography>
         <XBox>
-          <img onClick={() => setOpenUserModal(false)} style={{ cursor: 'pointer' }} src={closeX} />
+          <img onClick={() => setOpenUserForm(false)} style={{ cursor: 'pointer' }} src={closeX} />
         </XBox>
       </TextBox>
       <Grid container spacing={4}>
