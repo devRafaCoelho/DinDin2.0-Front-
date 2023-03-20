@@ -9,10 +9,11 @@ import Logo from '../logo'
 import Modal from '../modal'
 import UserForm from '../userForm'
 import { HeaderBox, HeaderContent, HeaderText, HeaderWhite } from './styles'
+import useAppContext from '../../hooks/useAppContext'
 
 export default function HeaderPart() {
-  const [userData, setUserData] = useState('')
-  const [userFormBoolean, setUserFormBoolean] = useState(false)
+  // const [userFormBoolean, setUserFormBoolean] = useState(false)
+  const { userData, setUserData, openUserModal, setOpenUserModal } = useAppContext()
   const navigate = useNavigate()
 
   async function getUser() {
@@ -40,7 +41,12 @@ export default function HeaderPart() {
       <HeaderContent>
         <Logo />
         <HeaderText>
-          <img onClick={() => setUserFormBoolean(true)} style={{ width: '65px', height: '65px', cursor: 'pointer' }} src={profile} alt="Imagem de perfil" />
+          <img
+            onClick={() => setOpenUserModal(true)}
+            style={{ width: '65px', height: '65px', cursor: 'pointer' }}
+            src={profile}
+            alt="Imagem de perfil"
+          />
           <Typography variant="button" color="white">
             {userData.name}
           </Typography>
@@ -56,8 +62,8 @@ export default function HeaderPart() {
         </HeaderText>
       </HeaderContent>
       <HeaderWhite />
-      <Modal open={userFormBoolean}>
-        <UserForm open={userFormBoolean} setUserFormBoolean={setUserFormBoolean} userData={userData} setUserData={setUserData} getUser={getUser} />
+      <Modal open={openUserModal}>
+        <UserForm getUser={getUser} />
       </Modal>
     </HeaderBox>
   )

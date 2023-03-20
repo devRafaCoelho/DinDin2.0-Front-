@@ -1,5 +1,6 @@
 import { Box, styled } from '@mui/material'
 import { css } from '@mui/styled-engine'
+import useAppContext from '../../hooks/useAppContext'
 
 const ModalBackground = styled(Box)`
   ${({ theme }) => css`

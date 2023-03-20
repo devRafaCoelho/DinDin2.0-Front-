@@ -81,13 +81,25 @@ export default function MainPage() {
                   <TableCellBorderRadius side="right" />
                 </CustomTableHead>
                 <TableBody>
-                  <CustomTableRow type="a" setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow type="a" setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
+                  <CustomTableRow
+                    type="a"
+                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
+                  />
+                  <CustomTableRow
+                    type="a"
+                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
+                  />
                   <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow type="a" setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
+                  <CustomTableRow
+                    type="a"
+                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
+                  />
                   <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
                   <CustomTableRow setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
-                  <CustomTableRow type="a" setTransitionEditFormBoolean={setTransitionEditFormBoolean} />
+                  <CustomTableRow
+                    type="a"
+                    setTransitionEditFormBoolean={setTransitionEditFormBoolean}
+                  />
                 </TableBody>
               </CustomTable>
             </CustomTableContainer>
@@ -104,7 +116,13 @@ export default function MainPage() {
                     R$ 100,00
                   </Typography>
                 </ResumeValue>
-                <ResumeValue sx={{ paddingBottom: '19px', marginBottom: '16px', borderBottom: 'solid 1px #EAEAEA' }}>
+                <ResumeValue
+                  sx={{
+                    paddingBottom: '19px',
+                    marginBottom: '16px',
+                    borderBottom: 'solid 1px #EAEAEA'
+                  }}
+                >
                   <Typography variant="resumeText">Saídas</Typography>
                   <Typography variant="resumeValue" color="primary.valueOutput">
                     R$ 100,00
@@ -127,12 +145,12 @@ export default function MainPage() {
         </MainPageAll>
       </MainPageBox>
 
-      <Modal open={transitionEditFormBoolean}>
+      {/* <Modal open={transitionEditFormBoolean}>
         <TransitionForm text="Editar" setState={setTransitionEditFormBoolean} />
       </Modal>
       <Modal open={transitionAddFormBoolean}>
         <TransitionForm text="Adicionar" setState={setTransitionAddFormBoolean} />
-      </Modal>
+      </Modal> */}
     </>
   )
 }

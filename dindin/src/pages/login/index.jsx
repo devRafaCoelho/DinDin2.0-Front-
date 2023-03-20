@@ -6,11 +6,19 @@ import DefaultTextField from '../../components/defaultTextField'
 import Logo from '../../components/logo'
 import { schemaLogin } from '../../schemas/schemas'
 import api from '../../services/api'
-import { DefaultButton, FormBox, LoginRegisterPage, LoginRegisterPageContend } from '../../styles/styles'
+import {
+  DefaultButton,
+  FormBox,
+  LoginRegisterPage,
+  LoginRegisterPageContend
+} from '../../styles/styles'
 import { setItem } from '../../utils/storage'
 import { DisplayGap, LoginText, TextButton } from './styles'
+import useAppContext from '../../hooks/useAppContext'
 
 export default function LoginPage() {
+  const navigate = useNavigate()
+  const { setUserData } = useAppContext()
   const {
     register,
     handleSubmit,
@@ -19,7 +27,6 @@ export default function LoginPage() {
   } = useForm({
     resolver: yupResolver(schemaLogin)
   })
-  const navigate = useNavigate()
 
   async function onSubmit({ email, password }) {
     try {
@@ -30,6 +37,8 @@ export default function LoginPage() {
 
       const { token } = response.data
       setItem('token', token)
+
+      setUserData(response.data)
       navigate('/main')
     } catch (error) {
       if (error.response.data?.error) {
@@ -64,7 +73,8 @@ export default function LoginPage() {
               , sem planilha chata.
             </Typography>
             <Typography variant="loginText" component="p" color="white">
-              Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
+              Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único
+              lugar e em um clique de distância.
             </Typography>
             <TextButton color="primary" onClick={() => navigate('/register')} variant="contained">
               <Typography variant="button" color="white">
@@ -72,13 +82,30 @@ export default function LoginPage() {
               </Typography>
             </TextButton>
           </LoginText>
-          <FormBox component="form" gap="50px" onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}>
+          <FormBox
+            component="form"
+            gap="50px"
+            onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
+          >
             <Typography variant="loginFormTitle" component="h1" color="primary">
               Login
             </Typography>
             <Grid gap="30px" container spacing={2}>
-              <DefaultTextField inputName="email" text="E-mail" register={register} errors={errors} placeHolderText="seu Email" />
-              <DefaultTextField inputName="password" text="Senha" register={register} errors={errors} placeHolderText="sua senha" passwordInput={true} />
+              <DefaultTextField
+                inputName="email"
+                text="E-mail"
+                register={register}
+                errors={errors}
+                placeHolderText="seu Email"
+              />
+              <DefaultTextField
+                inputName="password"
+                text="Senha"
+                register={register}
+                errors={errors}
+                placeHolderText="sua senha"
+                passwordInput={true}
+              />
             </Grid>
             <DefaultButton type="submit" variant="contained">
               <Typography variant="button" color="white">
