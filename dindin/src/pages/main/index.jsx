@@ -24,14 +24,9 @@ import {
 
 export default function MainPage() {
   const [filterBoolean, setFilterBoolean] = useState(false)
-  const [transitionEditFormBoolean, setTransitionEditFormBoolean] = useState(false)
 
-  const {
-    openAddTransactionForm,
-    setOpenAddTransactionForm,
-    openEditTransactionForm,
-    setOpenEditTransactionForm
-  } = useAppContext()
+  const { openAddTransactionForm, setOpenAddTransactionForm, openEditTransactionForm } =
+    useAppContext()
 
   return (
     <>

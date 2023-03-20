@@ -6,6 +6,7 @@ export const AppContext = createContext(null)
 
 export default function AppProvider({ children }) {
   const [userData, setUserData] = useState('')
+  const [categories, setCategories] = useState([])
   const [openUserForm, setOpenUserForm] = useState(false)
   const [openAddTransactionForm, setOpenAddTransactionForm] = useState(false)
   const [openEditTransactionForm, setOpenEditTransactionForm] = useState(false)
@@ -20,7 +21,9 @@ export default function AppProvider({ children }) {
         openAddTransactionForm,
         setOpenAddTransactionForm,
         openEditTransactionForm,
-        setOpenEditTransactionForm
+        setOpenEditTransactionForm,
+        categories,
+        setCategories
       }}
     >
       {children}

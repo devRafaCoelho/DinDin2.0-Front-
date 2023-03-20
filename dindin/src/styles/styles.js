@@ -1,6 +1,6 @@
-import { styled, Box, Button, InputLabel, TableCell } from '@mui/material'
-import { theme } from '../theme/theme'
+import { Box, Button, styled, TableCell } from '@mui/material'
 import ImagemDeFundo from '../assets/imagemDeFundo.png'
+import { theme } from '../theme/theme'
 
 export const LoginRegisterPage = styled(Box)`
   background-image: url(${() => ImagemDeFundo});

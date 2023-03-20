@@ -5,29 +5,103 @@ import { useForm } from 'react-hook-form'
 import { mask, unMask } from 'remask'
 import closeX from '../../assets/closeX.svg'
 import useAppContext from '../../hooks/useAppContext'
-import { schemaTransition } from '../../schemas/schemas'
+import { schemaTransation } from '../../schemas/schemas'
+import api from '../../services/api'
 import { DefaultButton, FormBox, TextBox, XBox } from '../../styles/styles'
 import { formatedValueInputBRL } from '../../utils/formatValue'
+import { getItem } from '../../utils/storage'
 import DefaultTextField from '../defaultTextField'
 import { CustomTypography } from './styles'
 
 export default function TransactionForm({ text }) {
   const [selectValue, setSelectValue] = useState('valor nulo')
-  const { setOpenAddTransactionForm, setOpenEditTransactionForm } = useAppContext()
+  const [statusEntryButton, setStatusEntryButton] = useState(true)
+  const [statusExitButton, setStatusExitButton] = useState(false)
+  const { setOpenAddTransactionForm, setOpenEditTransactionForm, categories, setCategories } =
+    useAppContext()
   const {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(schemaTransition)
+    resolver: yupResolver(schemaTransation),
+    defaultValues: {
+      type: '',
+      value: '',
+      date: '',
+      description: '',
+      categorie_id: ''
+    }
   })
 
-  function onSubmit({ email, password }) {
-    console.log(email, password)
+  async function getCategories() {
+    try {
+      const token = getItem('token')
+
+      const response = await api.get('/categorie', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setCategories(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  async function onSubmit({ type, value, date, description, categorie_id }) {
+    try {
+      const token = getItem('token')
+
+      const data = {
+        type: statusEntryButton ? 'entrada' : 'saida',
+        value,
+        date,
+        description,
+        categorie_id
+      }
+      console.log(data)
+
+      if (text === 'Adicionar') {
+        await api.post('/transaction', data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      } else if (text === 'Editar') {
+        await api.put('/transaction/${id}', data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      }
+
+      setOpenAddTransactionForm()
+      setOpenEditTransactionForm()
+    } catch (error) {
+      if (error.response.data?.error) {
+        const errorData = Object.getOwnPropertyNames(error.response.data?.error)
+        errorData.map((elementDate) => {
+          setError(
+            elementDate,
+            {
+              type: 'manual',
+              message: error.response.data?.error[elementDate]
+            },
+            {
+              shouldFocus: true
+            }
+          )
+        })
+      }
+    }
   }
 
   useEffect(() => {
+    getCategories()
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = 'unset'
@@ -61,7 +135,37 @@ export default function TransactionForm({ text }) {
           />
         </XBox>
       </TextBox>
-      <Grid container spacing={2}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6}>
+          <DefaultButton
+            mrtop="50px"
+            variant="contained"
+            sx={{ backgroundColor: statusEntryButton ? 'primary.secondary' : 'grey.1400' }}
+            onClick={() => {
+              setStatusEntryButton(true)
+              setStatusExitButton(false)
+            }}
+          >
+            <Typography variant="button" color="white">
+              Entrada
+            </Typography>
+          </DefaultButton>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <DefaultButton
+            mrtop="50px"
+            variant="contained"
+            sx={{ backgroundColor: statusExitButton ? 'primary.negativeButton' : 'grey.1400' }}
+            onClick={() => {
+              setStatusEntryButton(false)
+              setStatusExitButton(true)
+            }}
+          >
+            <Typography variant="button" color="white">
+              Saída
+            </Typography>
+          </DefaultButton>
+        </Grid>
         <DefaultTextField
           inputName="value"
           text="Valor"
@@ -72,38 +176,33 @@ export default function TransactionForm({ text }) {
           start="R$"
         />
         <Grid item xs={12}>
-          <FormLabel htmlFor="category">
+          <FormLabel htmlFor="categorie_id">
             <Typography color="#484848" variant="formLabel">
               {text}
             </Typography>
           </FormLabel>
           <Select
             fullWidth
-            id="category"
-            name="category"
+            id="categorie_id"
+            name="categorie_id"
             value={selectValue}
-            {...register('category')}
-            error={!!errors['category']}
+            {...register('categorie_id')}
+            error={!!errors['categorie_id']}
             onChange={(e) => setSelectValue(e.target.value)}
             color="grey"
           >
             <MenuItem disabled value="valor nulo">
               <em>Selecione a categoria</em>
             </MenuItem>
-            <MenuItem value="coisa linda">
-              <em>coisa linda</em>
-            </MenuItem>
-            <MenuItem value="coisa feia">
-              <em>coisa feia</em>
-            </MenuItem>
-            <MenuItem value="horroroso">
-              <em>horroroso</em>
-            </MenuItem>
-            <MenuItem value="aaaa">
-              <em>aaaa</em>
-            </MenuItem>
+            {categories.map((category) => (
+              <MenuItem key={category.id} value={category.id}>
+                <em>{category.description}</em>
+              </MenuItem>
+            ))}
           </Select>
-          {errors['category'] && <CustomTypography>{errors['category'].message}</CustomTypography>}
+          {errors['categorie_id'] && (
+            <CustomTypography>{errors['categorie_id'].message}</CustomTypography>
+          )}
         </Grid>
         <DefaultTextField
           inputName="date"

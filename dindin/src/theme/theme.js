@@ -32,7 +32,8 @@ export const theme = createTheme({
       1000: 'rgba(145, 154, 150, 0.3)',
       1100: '#667085',
       1200: '#D0D5DD',
-      1300: '#484848'
+      1300: '#484848',
+      1400: '#B9B9B9'
     },
     background: {
       payed: '#EEF6F6',

@@ -1,15 +1,38 @@
 import { Box, TableCell, TableRow, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ArrowDelete from '../../assets/arrowDelete.svg'
 import Pen from '../../assets/pen.svg'
 import Trash from '../../assets/trash.svg'
 import useAppContext from '../../hooks/useAppContext'
+import api from '../../services/api'
 import { CustomTableCell } from '../../styles/styles'
+import { getItem } from '../../utils/storage'
 import { CustomPaper, TableRowBox } from './styles'
 
 export default function CustomTableRow({ type }) {
   const [openDelete, setOpenDelete] = useState(false)
+  const [transactions, setTransactions] = useState([])
   const { setOpenEditTransactionForm } = useAppContext()
+
+  async function getTransactions() {
+    const token = getItem('token')
+
+    try {
+      const response = await api.get('/transaction', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setTransactions(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  useEffect(() => {
+    getTransactions()
+  }, [])
 
   return (
     <TableRow>
@@ -34,7 +57,7 @@ export default function CustomTableRow({ type }) {
         <img
           style={{ cursor: 'pointer' }}
           src={Pen}
-          alt="Imagem Editar Cobrança"
+          alt="Editar Cobrança"
           onClick={() => setOpenEditTransactionForm(true)}
         />
       </TableCell>
@@ -42,7 +65,7 @@ export default function CustomTableRow({ type }) {
         <img
           style={{ cursor: 'pointer' }}
           src={Trash}
-          alt="Imagem Deletar Cobrança"
+          alt="Deletar Cobrança"
           onClick={() => setOpenDelete(!openDelete)}
         />
         {openDelete && (
@@ -55,6 +78,7 @@ export default function CustomTableRow({ type }) {
                 position: 'absolute'
               }}
               src={ArrowDelete}
+              alt=""
             />
             <TableRowBox>
               <Typography variant="deleteText">Apagar item?</Typography>
