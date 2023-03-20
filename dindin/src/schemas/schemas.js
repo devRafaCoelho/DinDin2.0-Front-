@@ -29,7 +29,7 @@ export const schemaUpdateUser = yup.object().shape({
 export const schemaTransation = yup.object().shape({
   value: yup.string().required('Este campo deve ser preenchido'),
   date: yup.string().required('Este campo deve ser preenchido'),
-  category_id: yup
+  categorie_id: yup
     .string()
     .notOneOf(['valor nulo'], 'Selecione um valor')
     .required('Este campo deve ser preenchido'),

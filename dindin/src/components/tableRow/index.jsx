@@ -101,3 +101,72 @@ export default function CustomTableRow({ type }) {
     </TableRow>
   )
 }
+
+// {transactions.map((transaction) => (
+//   <>
+//     <CustomTableCell align="left">
+//       <Typography variant="tableTitle">{transaction.date}</Typography>
+//     </CustomTableCell>
+//     <TableCell align="center">
+//       <Typography variant="tableText">{transaction.date}</Typography>
+//     </TableCell>
+//     <TableCell align="center">
+//       <Typography variant="tableText">{transaction.description}</Typography>
+//     </TableCell>
+//     <TableCell align="center">
+//       <Typography variant="tableText">{transaction.categorie_id}</Typography>
+//     </TableCell>
+//     <TableCell align="center">
+//       <Typography variant="tableTitle" color={type ? '#7B61FF' : '#FA8C10'}>
+//         {transaction.value}
+//       </Typography>
+//     </TableCell>
+//     <TableCell align="center">
+//       <img
+//         style={{ cursor: 'pointer' }}
+//         src={Pen}
+//         alt="Editar Cobrança"
+//         onClick={() => setOpenEditTransactionForm(true)}
+//       />
+//     </TableCell>
+//     <TableCell style={{ position: 'relative' }} align="center">
+//       <img
+//         style={{ cursor: 'pointer' }}
+//         src={Trash}
+//         alt="Deletar Cobrança"
+//         onClick={() => setOpenDelete(!openDelete)}
+//       />
+//       {openDelete && (
+//         <>
+//           <img
+//             style={{
+//               top: '70%',
+//               left: '50%',
+//               transform: 'translate(-50%, -50%)',
+//               position: 'absolute'
+//             }}
+//             src={ArrowDelete}
+//             alt=""
+//           />
+//           <TableRowBox>
+//             <Typography variant="deleteText">Apagar item?</Typography>
+//             <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingTop: '5px' }}>
+//               <CustomPaper bgcolor="#3A9FF1">
+//                 <Typography variant="deleteButton" color="white">
+//                   Sim
+//                 </Typography>
+//               </CustomPaper>
+//               <CustomPaper onClick={() => setOpenDelete(false)} bgcolor="#FF576B">
+//                 <Typography variant="deleteButton" color="white">
+//                   Não
+//                 </Typography>
+//               </CustomPaper>
+//             </Box>
+//           </TableRowBox>
+//         </>
+//       )}
+//     </TableCell>
+//   </>
+// ))}
+// </TableRow>
+// )
