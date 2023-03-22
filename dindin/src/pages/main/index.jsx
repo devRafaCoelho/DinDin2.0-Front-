@@ -1,12 +1,14 @@
 import { Box, TableBody, TableCell, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Filter from '../../assets/filter.svg'
 import HeaderPart from '../../components/header'
 import Modal from '../../components/modal'
 import CustomTableRow from '../../components/tableRow'
 import TransitionForm from '../../components/transactionForm'
 import useAppContext from '../../hooks/useAppContext'
+import api from '../../services/api'
 import { DefaultButton } from '../../styles/styles'
+import { getItem } from '../../utils/storage'
 import {
   ButtonFilterApplication,
   CustomTable,
@@ -24,9 +26,48 @@ import {
 
 export default function MainPage() {
   const [filterBoolean, setFilterBoolean] = useState(false)
+  const [transactions, setTransactions] = useState([])
 
-  const { openAddTransactionForm, setOpenAddTransactionForm, openEditTransactionForm } =
+  const { openTransactionForm, setOpenTransactionForm, setTextTransactionForm, setCategories } =
     useAppContext()
+
+  async function getTransactions() {
+    const token = getItem('token')
+
+    try {
+      const response = await api.get('/transaction', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setTransactions(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  async function getCategories() {
+    try {
+      const token = getItem('token')
+
+      const response = await api.get('/categorie', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setCategories(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+
+  useEffect(() => {
+    getTransactions()
+    getCategories()
+  }, [])
+
 
   return (
     <>
@@ -62,7 +103,7 @@ export default function MainPage() {
             <CustomTableContainer>
               <CustomTable>
                 <CustomTableHead>
-                  <TableCellBorderRadius side={'left'} align="left">
+                  <TableCellBorderRadius side='left' align="left">
                     <Typography variant="tableTitle">Data</Typography>
                   </TableCellBorderRadius>
                   <TableCell align="center">
@@ -81,13 +122,9 @@ export default function MainPage() {
                   <TableCellBorderRadius side="right" />
                 </CustomTableHead>
                 <TableBody>
-                  <CustomTableRow type="a" />
-                  <CustomTableRow type="a" />
-                  <CustomTableRow />
-                  <CustomTableRow type="a" />
-                  <CustomTableRow />
-                  <CustomTableRow />
-                  <CustomTableRow type="a" />
+                  {transactions.map(transaction => (
+                    <CustomTableRow transaction={transaction} key={transaction.id} />
+                  ))}
                 </TableBody>
               </CustomTable>
             </CustomTableContainer>
@@ -124,7 +161,10 @@ export default function MainPage() {
                 </Typography>
               </ResumeValue>
             </Resume>
-            <DefaultButton variant="contained" onClick={() => setOpenAddTransactionForm(true)}>
+            <DefaultButton variant="contained" onClick={() => {
+              setOpenTransactionForm(true)
+              setTextTransactionForm('Adicionar')
+            }}>
               <Typography variant="button" color="white">
                 Adicionar Registro
               </Typography>
@@ -133,11 +173,8 @@ export default function MainPage() {
         </MainPageAll>
       </MainPageBox>
 
-      <Modal open={openAddTransactionForm}>
-        <TransitionForm text="Adicionar" />
-      </Modal>
-      <Modal open={openEditTransactionForm}>
-        <TransitionForm text="Editar" />
+      <Modal open={openTransactionForm}>
+        <TransitionForm />
       </Modal>
     </>
   )

@@ -13,11 +13,10 @@ import { getItem } from '../../utils/storage'
 import DefaultTextField from '../defaultTextField'
 import { CustomTypography } from './styles'
 
-export default function TransactionForm({ text }) {
+export default function TransactionForm() {
   const [selectValue, setSelectValue] = useState('valor nulo')
-  const [statusEntryButton, setStatusEntryButton] = useState(true)
-  const [statusExitButton, setStatusExitButton] = useState(false)
-  const { setOpenAddTransactionForm, setOpenEditTransactionForm, categories, setCategories } =
+  const [statusButton, setStatusButton] = useState(true)
+  const { setOpenTransactionForm, categories, textTransactionForm } =
     useAppContext()
   const {
     register,
@@ -36,51 +35,33 @@ export default function TransactionForm({ text }) {
     }
   })
 
-  async function getCategories() {
-    try {
-      const token = getItem('token')
-
-      const response = await api.get('/categorie', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      setCategories(response.data)
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
-
   async function onSubmit({ type, value, date, description, categorie_id }) {
     try {
       const token = getItem('token')
 
       const data = {
-        type: statusEntryButton ? 'entrada' : 'saida',
-        value,
+        type: statusButton ? 'entrada' : 'saida',
+        value: unMask(value),
         date,
         description,
         categorie_id
       }
       console.log(data)
 
-      if (text === 'Adicionar') {
+      if (textTransactionForm === 'Adicionar') {
         await api.post('/transaction', data, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-      } else if (text === 'Editar') {
+      } else if (textTransactionForm === 'Editar') {
         await api.put('/transaction/${id}', data, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
       }
-
-      setOpenAddTransactionForm()
-      setOpenEditTransactionForm()
+      setOpenTransactionForm(false)
     } catch (error) {
       if (error.response.data?.error) {
         const errorData = Object.getOwnPropertyNames(error.response.data?.error)
@@ -101,7 +82,6 @@ export default function TransactionForm({ text }) {
   }
 
   useEffect(() => {
-    getCategories()
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = 'unset'
@@ -123,12 +103,11 @@ export default function TransactionForm({ text }) {
       blur="true"
     >
       <TextBox>
-        <Typography variant="dindinLogo">{text} Registro</Typography>
+        <Typography variant="dindinLogo">{textTransactionForm} Registro</Typography>
         <XBox>
           <img
             onClick={() => {
-              setOpenAddTransactionForm(false)
-              setOpenEditTransactionForm(false)
+              setOpenTransactionForm(false)
             }}
             style={{ cursor: 'pointer' }}
             src={closeX}
@@ -140,10 +119,9 @@ export default function TransactionForm({ text }) {
           <DefaultButton
             mrtop="50px"
             variant="contained"
-            sx={{ backgroundColor: statusEntryButton ? 'primary.secondary' : 'grey.1400' }}
+            sx={{ backgroundColor: statusButton ? 'primary.secondary' : 'grey.1400' }}
             onClick={() => {
-              setStatusEntryButton(true)
-              setStatusExitButton(false)
+              setStatusButton(true)
             }}
           >
             <Typography variant="button" color="white">
@@ -155,10 +133,9 @@ export default function TransactionForm({ text }) {
           <DefaultButton
             mrtop="50px"
             variant="contained"
-            sx={{ backgroundColor: statusExitButton ? 'primary.negativeButton' : 'grey.1400' }}
+            sx={{ backgroundColor: !statusButton ? 'primary.negativeButton' : 'grey.1400' }}
             onClick={() => {
-              setStatusEntryButton(false)
-              setStatusExitButton(true)
+              setStatusButton(false)
             }}
           >
             <Typography variant="button" color="white">
@@ -178,7 +155,7 @@ export default function TransactionForm({ text }) {
         <Grid item xs={12}>
           <FormLabel htmlFor="categorie_id">
             <Typography color="#484848" variant="formLabel">
-              {text}
+              {textTransactionForm}
             </Typography>
           </FormLabel>
           <Select
