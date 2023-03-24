@@ -1,28 +1,40 @@
-import { Box, TableCell, TableRow, Typography } from '@mui/material'
+import { TableCell, TableRow, Typography } from '@mui/material'
 import { useState } from 'react'
-import Pen from '../../assets/pen.svg'
-import Trash from '../../assets/trash.svg'
-import useAppContext from '../../hooks/useAppContext'
-import { CustomTableCell } from '../../styles/styles'
+import Pen from '../../../assets/pen.svg'
+import Trash from '../../../assets/trash.svg'
+import useAppContext from '../../../hooks/useAppContext'
+import { CustomTableCell } from '../../../styles/styles'
 import DeleteConfirmation from '../deleteConfirmation'
+import { formatedDate } from '../../../utils/formatValue'
 
 export default function CustomTableRow({ transaction }) {
   const [openDelete, setOpenDelete] = useState(false)
-  const { setOpenTransactionForm, setTextTransactionForm } = useAppContext()
+  const { setOpenTransactionForm, setTextTransactionForm, setTransactionId, categories } = useAppContext()
+  const weekDay = [
+    'Domingo',
+    'Segunda-Feira',
+    'Terça-Feira',
+    'Quarta-Feira',
+    'Quinta-Feira',
+    'Sexta-Feira',
+    'Sábado'
+  ]
 
+  const categorieName = categories.find(categorie => categorie.id === transaction.categorie_id)
+  const weekNumber = new Date(transaction.date)
   return (
     <TableRow>
       <CustomTableCell align="left">
-        <Typography variant="tableTitle">{transaction.date}</Typography>
+        <Typography variant="tableTitle">{formatedDate(transaction.date)}</Typography>
       </CustomTableCell>
       <TableCell align="center">
-        <Typography variant="tableText">{transaction.date}</Typography>
+        <Typography variant="tableText">{weekDay[weekNumber.getDay()]}</Typography>
       </TableCell>
       <TableCell align="center">
         <Typography variant="tableText">{transaction.description}</Typography>
       </TableCell>
       <TableCell align="center">
-        <Typography variant="tableText">{transaction.categorie_id}</Typography>
+        <Typography variant="tableText">{categorieName ? categorieName.description : ''}</Typography>
       </TableCell>
       <TableCell align="center">
         <Typography variant="tableTitle" color={transaction.type === 'entrada' ? '#7B61FF' : '#FA8C10'}>
@@ -37,6 +49,7 @@ export default function CustomTableRow({ transaction }) {
           onClick={() => {
             setTextTransactionForm('Editar')
             setOpenTransactionForm(true)
+            setTransactionId(transaction.id)
           }}
         />
       </TableCell>

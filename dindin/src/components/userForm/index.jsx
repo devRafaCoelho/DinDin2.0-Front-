@@ -10,8 +10,8 @@ import { getItem } from '../../utils/storage'
 import DefaultTextField from '../defaultTextField'
 import useAppContext from '../../hooks/useAppContext'
 
-export default function UserForm({ getUser }) {
-  const { userData, setUserData, setOpenUserForm } = useAppContext()
+export default function UserForm() {
+  const { userData, setUserData, setOpenUserForm, functionGetUser } = useAppContext()
   const {
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ export default function UserForm({ getUser }) {
       })
 
       setUserData(data)
-      getUser()
+      functionGetUser()
       setOpenUserForm()
     } catch (error) {
       if (error.response.data?.error) {

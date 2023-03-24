@@ -16,7 +16,7 @@ import { CustomTypography } from './styles'
 export default function TransactionForm() {
   const [selectValue, setSelectValue] = useState('valor nulo')
   const [statusButton, setStatusButton] = useState(true)
-  const { setOpenTransactionForm, categories, textTransactionForm } =
+  const { setOpenTransactionForm, functionGetResumeValues, functionGetTransactions, transactionData, functionGetDetailTransaction, categories, textTransactionForm, transactionId } =
     useAppContext()
   const {
     register,
@@ -36,6 +36,7 @@ export default function TransactionForm() {
   })
 
   async function onSubmit({ type, value, date, description, categorie_id }) {
+
     try {
       const token = getItem('token')
 
@@ -46,7 +47,6 @@ export default function TransactionForm() {
         description,
         categorie_id
       }
-      console.log(data)
 
       if (textTransactionForm === 'Adicionar') {
         await api.post('/transaction', data, {
@@ -55,13 +55,15 @@ export default function TransactionForm() {
           }
         })
       } else if (textTransactionForm === 'Editar') {
-        await api.put('/transaction/${id}', data, {
+        await api.put(`/transaction/${transactionId}`, data, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
       }
       setOpenTransactionForm(false)
+      functionGetTransactions()
+      functionGetResumeValues()
     } catch (error) {
       if (error.response.data?.error) {
         const errorData = Object.getOwnPropertyNames(error.response.data?.error)
@@ -82,11 +84,29 @@ export default function TransactionForm() {
   }
 
   useEffect(() => {
+    if (textTransactionForm === 'Editar') {
+      functionGetDetailTransaction()
+    }
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = 'unset'
     }
   }, [])
+
+  useEffect(() => {
+    if (textTransactionForm === 'Editar' && transactionData) {
+      handleChange({
+        target: {
+          value: unMask(transactionData.value).replace('R', '')
+        }
+      })
+      setValue('date', transactionData.date)
+      setValue('description', transactionData.description)
+      setSelectValue(transactionData.categorie_id)
+      setValue('categorie_id', transactionData.categorie_id)
+      transactionData.type === 'entrada' ? setStatusButton(true) : setStatusButton(false)
+    }
+  }, [transactionData])
 
   function handleChange(e) {
     let correctValue = formatedValueInputBRL(unMask(e.target.value))

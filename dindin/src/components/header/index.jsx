@@ -1,38 +1,21 @@
 import { Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import exit from '../../assets/exit.svg'
 import profile from '../../assets/profile.svg'
-import api from '../../services/api'
-import { getItem, logOut } from '../../utils/storage'
+import useAppContext from '../../hooks/useAppContext'
+import { logOut } from '../../utils/storage'
 import Logo from '../logo'
 import Modal from '../modal'
 import UserForm from '../userForm'
 import { HeaderBox, HeaderContent, HeaderText, HeaderWhite } from './styles'
-import useAppContext from '../../hooks/useAppContext'
 
 export default function HeaderPart() {
-  const { userData, setUserData, openUserForm, setOpenUserForm } = useAppContext()
+  const { userData, functionGetUser, openUserForm, setOpenUserForm } = useAppContext()
   const navigate = useNavigate()
 
-  async function getUser() {
-    const token = getItem('token')
-
-    try {
-      const response = await api.get('/user', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      setUserData(response.data)
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
-
   useEffect(() => {
-    getUser()
+    functionGetUser()
   }, [])
 
   return (
@@ -62,7 +45,7 @@ export default function HeaderPart() {
       </HeaderContent>
       <HeaderWhite />
       <Modal open={openUserForm}>
-        <UserForm getUser={getUser} />
+        <UserForm />
       </Modal>
     </HeaderBox>
   )

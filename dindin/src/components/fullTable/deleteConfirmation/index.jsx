@@ -1,8 +1,11 @@
 import { Box, Typography } from '@mui/material'
 import { CustomPaper, TableRowBox } from '../deleteConfirmation/styles'
-import ArrowDelete from '../../assets/arrowDelete.svg'
+import ArrowDelete from '../../../assets/arrowDelete.svg'
+import useAppContext from '../../../hooks/useAppContext'
 
 export default function DeleteConfirmation({ setOpenDelete, id }) {
+  const { functionDeleteTransaction } = useAppContext()
+
   return (
     <>
       <img
@@ -18,7 +21,9 @@ export default function DeleteConfirmation({ setOpenDelete, id }) {
       <TableRowBox>
         <Typography variant="deleteText">Apagar item?</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingTop: '5px' }}>
-          <CustomPaper bgcolor="#3A9FF1">
+          <CustomPaper onClick={() => {
+            functionDeleteTransaction(id)
+          }} bgcolor="#3A9FF1">
             <Typography variant="deleteButton" color="white">
               Sim
             </Typography>
