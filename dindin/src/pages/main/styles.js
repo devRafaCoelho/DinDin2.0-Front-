@@ -7,10 +7,10 @@ export const MainPageBox = styled(Box)`
 
 export const MainPageAll = styled(Box)`
     display: flex;
-    column-gap: 40px;
-    flex-wrap: wrap;
+    column-gap: 5vw;
+    flex-wrap: wrap-reverse;
     min-height: 85vh;
     padding-left: 7vw;
     padding-right: 7vw;
-    justify-content: space-between;
+    justify-content: center;
 `

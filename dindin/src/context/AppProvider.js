@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createContext } from 'react'
 import api from '../services/api'
 import { getItem } from '../utils/storage'
@@ -15,7 +15,34 @@ export default function AppProvider({ children }) {
   const [resumeValues, setResumeValues] = useState('')
   const [transactionId, setTransactionId] = useState('');
   const [transactionData, setTransactionData] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [presentCategories, setPresentCategories] = useState(['']);
+  const [trueOrFalse, setTrueOrFalse] = useState(false)
 
+  function toggleCategorie(item) {
+    const index = selectedCategories.indexOf(item);
+    if (index >= 0) {
+      const localObject = selectedCategories.splice(index, 1)
+      setSelectedCategories(localObject);
+    } else {
+      console.log(item)
+      const localObject = selectedCategories.push(item)
+      console.log(localObject)
+
+      setSelectedCategories(localObject);
+    }
+  }
+
+  async function aplicateFilter() {
+    await functionGetTransactions()
+    if (selectedCategories.length === 0) {
+      return
+    }
+    const transactionsFiltered = transactions.filter(transaction => {
+      return selectedCategories.some(category => transaction.categorie_id === category.id);
+    });
+    setTransactions(transactionsFiltered)
+  }
 
   async function functionGetUser() {
     const token = getItem('token')
@@ -60,6 +87,10 @@ export default function AppProvider({ children }) {
         }
       })
       setTransactions(response.data)
+      const localObject = categories.filter(category => {
+        return response.data.some(transaction => transaction.categorie_id === category.id);
+      })
+      setPresentCategories(localObject)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -100,7 +131,7 @@ export default function AppProvider({ children }) {
   async function functionDeleteTransaction(id) {
     try {
       const token = getItem('token')
-      const response = await api.delete(`/transaction/${id}`, {
+      await api.delete(`/transaction/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -138,7 +169,14 @@ export default function AppProvider({ children }) {
         functionGetCategories,
         functionGetResumeValues,
         functionGetDetailTransaction,
-        functionDeleteTransaction
+        functionDeleteTransaction,
+        selectedCategories,
+        setSelectedCategories,
+        toggleCategorie,
+        aplicateFilter,
+        presentCategories,
+        setPresentCategories,
+        trueOrFalse, setTrueOrFalse
       }}
     >
       {children}

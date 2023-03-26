@@ -17,14 +17,18 @@ export default function MainPage() {
     openTransactionForm,
     functionGetTransactions,
     functionGetCategories,
-    functionGetResumeValues
+    functionGetResumeValues,
+    categories
   } = useAppContext()
 
   useEffect(() => {
-    functionGetTransactions()
     functionGetCategories()
     functionGetResumeValues()
   }, [])
+
+  useEffect(() => {
+    functionGetTransactions()
+  }, [categories])
 
 
   return (

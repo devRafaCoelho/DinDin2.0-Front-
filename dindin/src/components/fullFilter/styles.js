@@ -1,4 +1,5 @@
 import { Paper, styled } from '@mui/material'
+import { Box } from '@mui/system'
 import { theme } from '../../theme/theme'
 
 export const ButtonFilterApplication = styled(Paper)`
@@ -25,4 +26,10 @@ export const MainPaperFilterButton = styled(Paper)`
     cursor: pointer;
     background-color: ${(theme.palette.grey['100'])};
     margin-bottom: 25px;
+`
+
+export const FilterPapers = styled(Box)`
+  display: flex;
+  row-gap: 12px;
+  column-gap: 9px;
 `
