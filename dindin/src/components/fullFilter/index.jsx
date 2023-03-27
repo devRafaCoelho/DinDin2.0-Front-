@@ -11,7 +11,7 @@ export default function FullFilter() {
   const {
     setSelectedCategories,
     presentCategories,
-    aplicateFilter,
+    functionGetTransactions,
     setTrueOrFalse,
     trueOrFalse
   } = useAppContext()
@@ -19,7 +19,7 @@ export default function FullFilter() {
   function resetFilters() {
     setSelectedCategories([])
     setTrueOrFalse(!trueOrFalse)
-    aplicateFilter()
+    functionGetTransactions()
   }
 
   return (
@@ -46,7 +46,7 @@ export default function FullFilter() {
                 Limpar Filtros
               </Typography>
             </ButtonFilterApplication>
-            <ButtonFilterApplication onClick={() => aplicateFilter()} chosen="true">
+            <ButtonFilterApplication onClick={() => functionGetTransactions()} chosen="true">
               <Typography variant="filterTitle" color="white">
                 Aplicar Filtros
               </Typography>

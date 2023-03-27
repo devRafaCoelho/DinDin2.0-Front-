@@ -19,26 +19,26 @@ export default function AppProvider({ children }) {
   const [presentCategories, setPresentCategories] = useState(['']);
   const [trueOrFalse, setTrueOrFalse] = useState(false)
 
+  useEffect(() => {
+    functionGetTransactions()
+  }, [selectedCategories])
+
   function toggleCategorie(item) {
     const index = selectedCategories.indexOf(item);
+    const localObject = [...selectedCategories]
     if (index >= 0) {
-      const localObject = selectedCategories.splice(index, 1)
-      setSelectedCategories(localObject);
+      localObject.splice(index, 1)
     } else {
-      console.log(item)
-      const localObject = selectedCategories.push(item)
-      console.log(localObject)
-
-      setSelectedCategories(localObject);
+      localObject.push(item)
     }
+    setSelectedCategories(localObject);
   }
 
-  async function aplicateFilter() {
-    await functionGetTransactions()
+  async function aplicateFilter(data) {
     if (selectedCategories.length === 0) {
       return
     }
-    const transactionsFiltered = transactions.filter(transaction => {
+    const transactionsFiltered = data.filter(transaction => {
       return selectedCategories.some(category => transaction.categorie_id === category.id);
     });
     setTransactions(transactionsFiltered)
@@ -86,11 +86,12 @@ export default function AppProvider({ children }) {
           Authorization: `Bearer ${token}`
         }
       })
-      setTransactions(response.data)
+      await setTransactions(response.data)
       const localObject = categories.filter(category => {
         return response.data.some(transaction => transaction.categorie_id === category.id);
       })
       setPresentCategories(localObject)
+      aplicateFilter(response.data)
     } catch (error) {
       console.log(error.response.data)
     }

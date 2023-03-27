@@ -8,13 +8,20 @@ export default function ButtomFilter({ categorie }) {
   const {
     toggleCategorie,
     trueOrFalse,
+    selectedCategories
   } = useAppContext()
 
-  const [selected, setSelected] = useState(trueOrFalse)
+  const [selected, setSelected] = useState(false)
 
   useEffect(() => {
     setSelected(false)
   }, [trueOrFalse])
+
+  useEffect(() => {
+    if (selectedCategories.some(cat => categorie.id === cat.id)) {
+      setSelected(true)
+    }
+  }, [])
 
   return (
     <ButtonFilterApplication
