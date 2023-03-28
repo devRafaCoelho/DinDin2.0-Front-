@@ -34,16 +34,6 @@ export default function AppProvider({ children }) {
     setSelectedCategories(localObject);
   }
 
-  async function aplicateFilter(data) {
-    if (selectedCategories.length === 0) {
-      return
-    }
-    const transactionsFiltered = data.filter(transaction => {
-      return selectedCategories.some(category => transaction.categorie_id === category.id);
-    });
-    setTransactions(transactionsFiltered)
-  }
-
   async function functionGetUser() {
     const token = getItem('token')
 
@@ -76,7 +66,6 @@ export default function AppProvider({ children }) {
     }
   }
 
-
   async function functionGetTransactions() {
     const token = getItem('token')
 
@@ -86,12 +75,18 @@ export default function AppProvider({ children }) {
           Authorization: `Bearer ${token}`
         }
       })
-      setTransactions(response.data)
       const localObject = categories.filter(category => {
         return response.data.some(transaction => transaction.categorie_id === category.id);
       })
       setPresentCategories(localObject)
-      aplicateFilter(response.data)
+      setTransactions(response.data)
+      if (selectedCategories.length === 0) {
+        return
+      }
+      const transactionsFiltered = response.data.filter(transaction => {
+        return selectedCategories.some(category => transaction.categorie_id === category.id);
+      });
+      setTransactions(transactionsFiltered)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -161,7 +156,6 @@ export default function AppProvider({ children }) {
         setTransactions,
         resetValue,
         setResetValue,
-        aplicateFilter,
         functionGetTransactions,
 
         openTransactionForm,
