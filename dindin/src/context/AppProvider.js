@@ -17,7 +17,7 @@ export default function AppProvider({ children }) {
   const [transactionData, setTransactionData] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([])
   const [presentCategories, setPresentCategories] = useState(['']);
-  const [trueOrFalse, setTrueOrFalse] = useState(false)
+  const [resetValue, setResetValue] = useState(false)
 
   useEffect(() => {
     functionGetTransactions()
@@ -86,7 +86,7 @@ export default function AppProvider({ children }) {
           Authorization: `Bearer ${token}`
         }
       })
-      await setTransactions(response.data)
+      setTransactions(response.data)
       const localObject = categories.filter(category => {
         return response.data.some(transaction => transaction.categorie_id === category.id);
       })
@@ -149,35 +149,40 @@ export default function AppProvider({ children }) {
       value={{
         resumeValues,
         setResumeValues,
+        functionGetResumeValues,
+
         userData,
         setUserData,
         openUserForm,
         setOpenUserForm,
+        functionGetUser,
+
         transactions,
         setTransactions,
+        resetValue,
+        setResetValue,
+        aplicateFilter,
+        functionGetTransactions,
+
         openTransactionForm,
         setOpenTransactionForm,
-        categories,
-        setCategories,
         textTransactionForm,
         setTextTransactionForm,
-        transactionId,
-        setTransactionId,
         transactionData,
         setTransactionData,
-        functionGetUser,
-        functionGetTransactions,
-        functionGetCategories,
-        functionGetResumeValues,
-        functionGetDetailTransaction,
+        transactionId,
+        setTransactionId,
         functionDeleteTransaction,
+        functionGetDetailTransaction,
+
+        categories,
+        setCategories,
         selectedCategories,
         setSelectedCategories,
-        toggleCategorie,
-        aplicateFilter,
         presentCategories,
         setPresentCategories,
-        trueOrFalse, setTrueOrFalse
+        functionGetCategories,
+        toggleCategorie
       }}
     >
       {children}

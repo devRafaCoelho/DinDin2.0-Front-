@@ -137,6 +137,7 @@ export default function TransactionForm() {
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6}>
           <DefaultButton
+            bgc='#3756FA'
             mrtop="50px"
             variant="contained"
             sx={{ backgroundColor: statusButton ? 'primary.secondary' : 'grey.1400' }}
@@ -151,6 +152,7 @@ export default function TransactionForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <DefaultButton
+            bgc='#E85643'
             mrtop="50px"
             variant="contained"
             sx={{ backgroundColor: !statusButton ? 'primary.negativeButton' : 'grey.1400' }}

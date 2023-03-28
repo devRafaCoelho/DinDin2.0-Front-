@@ -7,7 +7,7 @@ import { ButtonFilterApplication } from "../styles";
 export default function ButtomFilter({ categorie }) {
   const {
     toggleCategorie,
-    trueOrFalse,
+    resetValue,
     selectedCategories
   } = useAppContext()
 
@@ -15,7 +15,7 @@ export default function ButtomFilter({ categorie }) {
 
   useEffect(() => {
     setSelected(false)
-  }, [trueOrFalse])
+  }, [resetValue])
 
   useEffect(() => {
     if (selectedCategories.some(cat => categorie.id === cat.id)) {

@@ -12,13 +12,13 @@ export default function FullFilter() {
     setSelectedCategories,
     presentCategories,
     functionGetTransactions,
-    setTrueOrFalse,
-    trueOrFalse
+    setResetValue,
+    resetValue
   } = useAppContext()
 
   function resetFilters() {
     setSelectedCategories([])
-    setTrueOrFalse(!trueOrFalse)
+    setResetValue(!resetValue)
     functionGetTransactions()
   }
 

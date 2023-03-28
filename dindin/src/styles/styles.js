@@ -25,6 +25,9 @@ export const DefaultButton = styled(Button)`
   padding-bottom: 11px;
   width: ${({ middle }) => (middle ? middle : '100%')};
   margin-top: ${({ mrtop }) => (mrtop ? mrtop : '0px')};
+  &:hover {
+    background-color: ${({ bgc }) => (bgc ? bgc : 'default')};
+  }
 `
 
 export const FormBox = styled(Box)`
