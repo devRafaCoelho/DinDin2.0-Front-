@@ -67,7 +67,7 @@ export default function TransactionForm() {
     } catch (error) {
       if (error.response.data?.error) {
         const errorData = Object.getOwnPropertyNames(error.response.data?.error)
-        errorData.map((elementDate) => {
+        errorData.forEach((elementDate) => {
           setError(
             elementDate,
             {

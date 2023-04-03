@@ -35,6 +35,5 @@ export default function ButtomFilter({ categorie }) {
         {`${categorie.description} ${selected ? 'x' : '+'}`}
       </Typography>
     </ButtonFilterApplication>
-
   )
 }
